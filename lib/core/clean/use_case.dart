@@ -1,3 +1,3 @@
-abstract class UseCaseOutput {}
-
 abstract class UseCaseInput {}
+
+abstract class UseCaseOutput {}

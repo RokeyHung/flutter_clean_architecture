@@ -27,8 +27,42 @@ migrate_working_dir/
 **/doc/api/
 **/ios/Flutter/.last_build_id
 .dart_tool/
+# pubspec.lock
+flutter_export_environment.sh
+devtools_options.yaml
+
+examples/all_plugins/pubspec.yaml
+pubspec_overrides.yaml
+
+Pods/
+.symlinks/
+**/Flutter/ephemeral/
+**/Flutter/Flutter.podspec
+**/Flutter/App.framework/
+**/Flutter/Flutter.framework/
+**/Flutter/Generated.xcconfig
+**/Flutter/flutter_assets/
+ServiceDefinitions.json
+xcuserdata/
+
+local.properties
+keystore.properties
+.gradle/
+gradlew
+gradlew.bat
+gradle-wrapper.jar
+*.iml
+
+GeneratedPluginRegistrant.h
+GeneratedPluginRegistrant.m
+GeneratedPluginRegistrant.java
+GeneratedPluginRegistrant.swift
+generated_plugin_registrant.dart
+
+build*/
 .flutter-plugins
 .flutter-plugins-dependencies
+
 .pub-cache/
 .pub/
 /build/
@@ -43,3 +77,60 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+.project
+.classpath
+.settings
+.last_build_id
+
+# Docs
+
+# Dependencies
+node_modules
+
+# Production
+website/build
+
+# Generated files
+.docusaurus
+.cache-loader
+
+# Misc
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+firebase-debug.log
+firestore-debug.log
+ui-debug.logui-debug.log
+
+# Generated code
+*.gen.dart
+*.freezed.dart
+*.g.dart
+*.gr.dart
+*.gen.dart
+generated_playbook.dart
+
+**/.fvm/
+
+# Local Mason Files
+.mason/
+
+# Secrets
+secrets/
+seckey.txt
+
+# mason
+mason-lock.json
+
+# logs
+/logs/
+
+# FVM Version Cache
+.fvm/

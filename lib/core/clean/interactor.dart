@@ -1,5 +1,5 @@
-import 'package:creator/core/clean/presenter.dart';
-import 'package:creator/core/clean/use_case.dart';
+import 'package:flutter_clean_architecture/core/clean/presenter.dart';
+import 'package:flutter_clean_architecture/core/clean/use_case.dart';
 
 abstract class Interactor<T extends UseCaseOutput, Input extends UseCaseInput> {
   Interactor(this.presenter);
