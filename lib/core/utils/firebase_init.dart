@@ -316,10 +316,10 @@ class FirebaseInitializer {
       handleMessage(initialMessage);
     }
 
-    // OEM が生成した通知をフォアグラウンドでタップした場合
+    // app が生成した通知をフォアグラウンドでタップした場合
     selectLocalNotification.stream.listen(handleMessage);
 
-    // OEM が生成した通知をバックグラウンドでタップした場合
+    // app が生成した通知をバックグラウンドでタップした場合
     final initialLocalMessage =
         await localNotifications.getNotificationAppLaunchDetails();
     if (initialLocalMessage != null &&

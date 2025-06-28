@@ -29,10 +29,10 @@ class RoundedTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final iconTheme = IconTheme.of(context);
-    final oemTheme = context.oemTheme;
+    final appTheme = context.appTheme;
     final foregroundColor =
-        this.foregroundColor ?? oemTheme.colorScheme.materialsLabel;
-    final backgroundColor = this.backgroundColor ?? oemTheme.colorScheme.base;
+        this.foregroundColor ?? appTheme.colorScheme.materialsLabel;
+    final backgroundColor = this.backgroundColor ?? appTheme.colorScheme.base;
 
     return RoundedButton(
       onTap: onTap,
@@ -55,7 +55,7 @@ class RoundedTextButton extends StatelessWidget {
             if (icon != null) const Gap(4),
             ButtonLabel(
               text,
-              style: oemTheme.textTheme.p12.copyWith(
+              style: appTheme.textTheme.p12.copyWith(
                 color: foregroundColor,
                 fontWeight: FontWeight.w700,
               ),

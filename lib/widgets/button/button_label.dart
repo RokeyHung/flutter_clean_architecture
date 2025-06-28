@@ -19,8 +19,8 @@ class ButtonLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final oemTheme = context.oemTheme;
-    final style = this.style ?? oemTheme.textTheme.p12;
+    final appTheme = context.appTheme;
+    final style = this.style ?? appTheme.textTheme.p12;
 
     return Padding(
       padding: padding,

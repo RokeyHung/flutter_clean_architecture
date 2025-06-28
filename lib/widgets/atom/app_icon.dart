@@ -35,7 +35,7 @@ class AppIcon extends StatelessWidget {
                 assetName,
               );
 
-  const AppIcon.oemProvider({
+  const AppIcon.appProvider({
     super.key,
     required this.iconProvider,
     this.iconSize,

@@ -47,7 +47,7 @@ class UserProfileScreen extends HookConsumerWidget {
       appBar: AppBar(
         title: Text(
           'プロフィール',
-          style: context.oemTheme.textTheme.p16.copyWith(
+          style: context.appTheme.textTheme.p16.copyWith(
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -78,7 +78,7 @@ class UserProfileScreen extends HookConsumerWidget {
 
   SliverList _buildIntroductionField(
       BuildContext context, UserProfileDataModel viewModel) {
-    final oemTheme = context.oemTheme;
+    final appTheme = context.appTheme;
 
     Widget socialLink({
       required IconData icon,
@@ -92,14 +92,14 @@ class UserProfileScreen extends HookConsumerWidget {
             Icon(
               icon,
               size: _kIconSize,
-              color: oemTheme.colorScheme.label,
+              color: appTheme.colorScheme.label,
             ),
             const Gap(2),
             Text(
               accountName,
-              style: oemTheme.textTheme.p12.copyWith(
+              style: appTheme.textTheme.p12.copyWith(
                 fontWeight: FontWeight.w400,
-                color: oemTheme.colorScheme.label,
+                color: appTheme.colorScheme.label,
               ),
             ),
           ],
@@ -113,7 +113,7 @@ class UserProfileScreen extends HookConsumerWidget {
           const Gap(12),
           Container(
             decoration: BoxDecoration(
-              color: oemTheme.colorScheme.surface,
+              color: appTheme.colorScheme.surface,
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(20),
                 topRight: Radius.circular(20),
@@ -162,9 +162,9 @@ class UserProfileScreen extends HookConsumerWidget {
                               children: [
                                 Text(
                                   viewModel.name,
-                                  style: oemTheme.textTheme.p20.copyWith(
+                                  style: appTheme.textTheme.p20.copyWith(
                                     fontWeight: FontWeight.w700,
-                                    color: oemTheme.colorScheme.label,
+                                    color: appTheme.colorScheme.label,
                                   ),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
@@ -187,9 +187,9 @@ class UserProfileScreen extends HookConsumerWidget {
                   const Gap(8),
                   Text(
                     viewModel.description,
-                    style: oemTheme.textTheme.p13.copyWith(
+                    style: appTheme.textTheme.p13.copyWith(
                       fontWeight: FontWeight.w400,
-                      color: oemTheme.colorScheme.label,
+                      color: appTheme.colorScheme.label,
                     ),
                   ),
                   const Gap(8),
@@ -209,7 +209,7 @@ class UserProfileScreen extends HookConsumerWidget {
                       Container(
                         width: 0.5,
                         height: 12,
-                        color: oemTheme.colorScheme.tertiary,
+                        color: appTheme.colorScheme.tertiary,
                       ),
                       const Gap(8),
                       socialLink(
@@ -234,7 +234,7 @@ class UserProfileScreen extends HookConsumerWidget {
 
   SliverList _buildRecruitments(
       BuildContext context, UserProfileDataModel viewModel) {
-    final oemTheme = context.oemTheme;
+    final appTheme = context.appTheme;
     final viewPadding = MediaQuery.of(context).viewPadding;
 
     return SliverList(
@@ -248,7 +248,7 @@ class UserProfileScreen extends HookConsumerWidget {
               children: [
                 Text(
                   '公開中の募集',
-                  style: oemTheme.textTheme.p16.copyWith(
+                  style: appTheme.textTheme.p16.copyWith(
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -276,15 +276,15 @@ class UserProfileScreen extends HookConsumerWidget {
     required String description,
     required String date,
   }) {
-    final oemTheme = context.oemTheme;
+    final appTheme = context.appTheme;
 
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: oemTheme.colorScheme.surface,
+        color: appTheme.colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: oemTheme.colorScheme.tertiary,
+          color: appTheme.colorScheme.tertiary,
           width: 1,
         ),
       ),
@@ -293,16 +293,16 @@ class UserProfileScreen extends HookConsumerWidget {
         children: [
           Text(
             title,
-            style: oemTheme.textTheme.p16.copyWith(
+            style: appTheme.textTheme.p16.copyWith(
               fontWeight: FontWeight.w600,
-              color: oemTheme.colorScheme.label,
+              color: appTheme.colorScheme.label,
             ),
           ),
           const Gap(4),
           Text(
             description,
-            style: oemTheme.textTheme.p13.copyWith(
-              color: oemTheme.colorScheme.label,
+            style: appTheme.textTheme.p13.copyWith(
+              color: appTheme.colorScheme.label,
             ),
           ),
           const Gap(8),
@@ -311,13 +311,13 @@ class UserProfileScreen extends HookConsumerWidget {
               Icon(
                 Icons.calendar_today,
                 size: 16,
-                color: oemTheme.colorScheme.label,
+                color: appTheme.colorScheme.label,
               ),
               const Gap(4),
               Text(
                 date,
-                style: oemTheme.textTheme.p12.copyWith(
-                  color: oemTheme.colorScheme.label,
+                style: appTheme.textTheme.p12.copyWith(
+                  color: appTheme.colorScheme.label,
                 ),
               ),
               const Spacer(),

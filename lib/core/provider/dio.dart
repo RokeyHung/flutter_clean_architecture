@@ -3,15 +3,15 @@ import 'package:flutter/foundation.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_clean_architecture/core/provider/oem_config.dart';
+import 'package:flutter_clean_architecture/core/provider/app_config.dart';
 import 'package:flutter_clean_architecture/core/utils/async_util.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ua_client_hints/ua_client_hints.dart';
 
 final dioProvider = Provider(
   (ref) => AppDio(
-    baseUrl: ref.watch(oemConfigProvider.select((value) => value.baseUrl)),
-    appName: ref.watch(oemConfigProvider.select((value) => value.appName)),
+    baseUrl: ref.watch(appConfigProvider.select((value) => value.baseUrl)),
+    appName: ref.watch(appConfigProvider.select((value) => value.appName)),
   ),
 );
 
@@ -45,7 +45,7 @@ class AppDio with DioMixin implements Dio {
               if (userAgent == null) {
                 final uaData = await userAgentData();
                 final clientHintsHeader = await userAgentClientHintsHeader();
-                final ua = 'OEM App/${uaData.version} ('
+                final ua = 'app App/${uaData.version} ('
                     '${uaData.platform} ${uaData.platformVersion};'
                     ' ${uaData.model};'
                     ' ${uaData.device};'
