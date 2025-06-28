@@ -3,6 +3,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/core/config/app_options.dart';
 import 'package:flutter_clean_architecture/core/provider/oem_options.dart';
+import 'package:flutter_clean_architecture/core/route/app_route.gr.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final routerProvider = Provider<AppRouter>((ref) {
@@ -33,12 +34,9 @@ class CreatorRouter extends AppRouter {
   PageRouteInfo<dynamic> tabToRoute(AppTab tab) {
     switch (tab) {
       case AppTab.timeline:
-        return TimelineRoute();
-      case AppTab.movie:
-        return MovieRoute();
-
-      case AppTab.mypage:
-        return const MypageRoute();
+        return const HomeRoute();
+      default:
+        return const HomeRoute();
     }
   }
 

@@ -24,10 +24,10 @@ class UserProfileInteractor
   @override
   Future<void> call(UserAddressUseCaseInput input) async {
     await input.when(
-      load: () async {
+      load: (userId) async {
         send(output: const UserAddressUseCaseOutput.loading());
 
-        final result = await userRepository.getUser();
+        final result = await userRepository.getUser(id: userId);
 
         result.either(
           (error) {
@@ -37,7 +37,7 @@ class UserProfileInteractor
           (data) {
             send(
               output: UserAddressUseCaseOutput.loadSuccess(
-                data,
+                user: data,
               ),
             );
             return data;

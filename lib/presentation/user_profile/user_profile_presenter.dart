@@ -34,7 +34,12 @@ class UserProfilePresenter extends StateNotifier<UserProfileDataModel>
           const UserProfileAction.failedToLoad(),
         );
       },
-      loadSuccess: () {},
+      loadSuccess: (user) {
+        state = state.copyWith(
+          isLoading: false,
+          me: user,
+        );
+      },
     );
   }
 }

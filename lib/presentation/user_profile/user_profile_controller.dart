@@ -20,9 +20,7 @@ class UserProfileController {
   final UserProfilePresenter _presenter;
   final UserProfileInteractor _interactor;
 
-  Future<void> load({
-    required int userId,
-  }) async {
+  Future<void> load(int userId) async {
     _interactor(UserAddressUseCaseInput.load(userId: userId));
   }
 }

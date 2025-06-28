@@ -1,4 +1,5 @@
 import 'package:flutter_clean_architecture/core/clean/use_case.dart';
+import 'package:flutter_clean_architecture/data/model/user.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user_address_use_case.freezed.dart';
@@ -21,6 +22,7 @@ class UserAddressUseCaseOutput
   const factory UserAddressUseCaseOutput.loadFailure({
     required Exception failure,
   }) = _LoadFailureUserAddressUseCaseOutput;
-  const factory UserAddressUseCaseOutput.loadSuccess() =
-      _LoadiSuccessAddressUseCaseOutput;
+  const factory UserAddressUseCaseOutput.loadSuccess({
+    required User user,
+  }) = _LoadUserSuccessAddressUseCaseOutput;
 }

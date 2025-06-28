@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:flutter_clean_architecture/core/extensions/context_extension.dart';
+import 'package:flutter_clean_architecture/core/theme/app_theme.dart';
+import 'package:flutter_clean_architecture/widgets/button/rounded_button.dart';
+import 'package:flutter_clean_architecture/widgets/button/button_label.dart';
 
 @immutable
 class RoundedTextButton extends StatelessWidget {
@@ -27,9 +31,8 @@ class RoundedTextButton extends StatelessWidget {
     final iconTheme = IconTheme.of(context);
     final oemTheme = context.oemTheme;
     final foregroundColor =
-        this.foregroundColor ?? oemTheme.colorScheme.materialsLabel.primary;
-    final backgroundColor =
-        this.backgroundColor ?? oemTheme.colorScheme.base.primary;
+        this.foregroundColor ?? oemTheme.colorScheme.materialsLabel;
+    final backgroundColor = this.backgroundColor ?? oemTheme.colorScheme.base;
 
     return RoundedButton(
       onTap: onTap,
@@ -81,7 +84,7 @@ class PlayIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppThemedIcon.bp(image: AppAssets.icon.playFill);
+    return const Icon(Icons.play_arrow, size: 13);
   }
 }
 
@@ -91,6 +94,6 @@ class ChevronRightIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppThemedIcon.bp(image: AppAssets.icon.chevronRight);
+    return const Icon(Icons.chevron_right, size: 13);
   }
 }

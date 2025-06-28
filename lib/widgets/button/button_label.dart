@@ -1,5 +1,6 @@
-import 'package:blueprint/context.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_clean_architecture/core/extensions/context_extension.dart';
+import 'package:flutter_clean_architecture/core/theme/app_theme.dart';
 
 @immutable
 class ButtonLabel extends StatelessWidget {
