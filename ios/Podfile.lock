@@ -1,0 +1,140 @@
+PODS:
+  - better_player (0.0.1):
+    - Cache (~> 6.0.0)
+    - Flutter
+    - GCDWebServer
+    - HLSCachingReverseProxyServer
+    - PINCache
+  - Cache (6.0.0)
+  - Flutter (1.0.0)
+  - flutter_keychain (0.0.1):
+    - Flutter
+  - fluttertoast (0.0.2):
+    - Flutter
+  - GCDWebServer (3.5.4):
+    - GCDWebServer/Core (= 3.5.4)
+  - GCDWebServer/Core (3.5.4)
+  - HLSCachingReverseProxyServer (0.1.0):
+    - GCDWebServer (~> 3.5)
+    - PINCache (>= 3.0.1-beta.3)
+  - image_gallery_saver_plus (0.0.1):
+    - Flutter
+  - libwebp (1.5.0):
+    - libwebp/demux (= 1.5.0)
+    - libwebp/mux (= 1.5.0)
+    - libwebp/sharpyuv (= 1.5.0)
+    - libwebp/webp (= 1.5.0)
+  - libwebp/demux (1.5.0):
+    - libwebp/webp
+  - libwebp/mux (1.5.0):
+    - libwebp/demux
+  - libwebp/sharpyuv (1.5.0)
+  - libwebp/webp (1.5.0):
+    - libwebp/sharpyuv
+  - map_launcher (0.0.1):
+    - Flutter
+  - native_shared_preferences (1.0.0):
+    - Flutter
+  - permission_handler_apple (9.3.0):
+    - Flutter
+  - photo_manager (3.7.1):
+    - Flutter
+    - FlutterMacOS
+  - PINCache (3.0.4):
+    - PINCache/Arc-exception-safe (= 3.0.4)
+    - PINCache/Core (= 3.0.4)
+  - PINCache/Arc-exception-safe (3.0.4):
+    - PINCache/Core
+  - PINCache/Core (3.0.4):
+    - PINOperation (~> 1.2.3)
+  - PINOperation (1.2.3)
+  - screen_protector (1.2.1):
+    - Flutter
+    - ScreenProtectorKit (~> 1.3.1)
+  - ScreenProtectorKit (1.3.1)
+  - social_sharing_plus (0.0.1):
+    - Flutter
+  - ua_client_hints (1.4.1):
+    - Flutter
+  - video_thumbnail (0.0.1):
+    - Flutter
+    - libwebp
+
+DEPENDENCIES:
+  - better_player (from `.symlinks/plugins/better_player/ios`)
+  - Flutter (from `Flutter`)
+  - flutter_keychain (from `.symlinks/plugins/flutter_keychain/ios`)
+  - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
+  - image_gallery_saver_plus (from `.symlinks/plugins/image_gallery_saver_plus/ios`)
+  - map_launcher (from `.symlinks/plugins/map_launcher/ios`)
+  - native_shared_preferences (from `.symlinks/plugins/native_shared_preferences/ios`)
+  - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
+  - photo_manager (from `.symlinks/plugins/photo_manager/ios`)
+  - screen_protector (from `.symlinks/plugins/screen_protector/ios`)
+  - social_sharing_plus (from `.symlinks/plugins/social_sharing_plus/ios`)
+  - ua_client_hints (from `.symlinks/plugins/ua_client_hints/ios`)
+  - video_thumbnail (from `.symlinks/plugins/video_thumbnail/ios`)
+
+SPEC REPOS:
+  trunk:
+    - Cache
+    - GCDWebServer
+    - HLSCachingReverseProxyServer
+    - libwebp
+    - PINCache
+    - PINOperation
+    - ScreenProtectorKit
+
+EXTERNAL SOURCES:
+  better_player:
+    :path: ".symlinks/plugins/better_player/ios"
+  Flutter:
+    :path: Flutter
+  flutter_keychain:
+    :path: ".symlinks/plugins/flutter_keychain/ios"
+  fluttertoast:
+    :path: ".symlinks/plugins/fluttertoast/ios"
+  image_gallery_saver_plus:
+    :path: ".symlinks/plugins/image_gallery_saver_plus/ios"
+  map_launcher:
+    :path: ".symlinks/plugins/map_launcher/ios"
+  native_shared_preferences:
+    :path: ".symlinks/plugins/native_shared_preferences/ios"
+  permission_handler_apple:
+    :path: ".symlinks/plugins/permission_handler_apple/ios"
+  photo_manager:
+    :path: ".symlinks/plugins/photo_manager/ios"
+  screen_protector:
+    :path: ".symlinks/plugins/screen_protector/ios"
+  social_sharing_plus:
+    :path: ".symlinks/plugins/social_sharing_plus/ios"
+  ua_client_hints:
+    :path: ".symlinks/plugins/ua_client_hints/ios"
+  video_thumbnail:
+    :path: ".symlinks/plugins/video_thumbnail/ios"
+
+SPEC CHECKSUMS:
+  better_player: 472a1f3471b8991bde82327c91498b0f7934245d
+  Cache: 4ca7e00363fca5455f26534e5607634c820ffc2d
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  flutter_keychain: 082382ca04745cc72ed13aa3598c151bb2eb426b
+  fluttertoast: 2c67e14dce98bbdb200df9e1acf610d7a6264ea1
+  GCDWebServer: 2c156a56c8226e2d5c0c3f208a3621ccffbe3ce4
+  HLSCachingReverseProxyServer: 59935e1e0244ad7f3375d75b5ef46e8eb26ab181
+  image_gallery_saver_plus: e597bf65a7846979417a3eae0763b71b6dfec6c3
+  libwebp: 02b23773aedb6ff1fd38cec7a77b81414c6842a8
+  map_launcher: fe43bda6720bb73c12fcc1bdd86123ff49a4d4d6
+  native_shared_preferences: 7513f4f28ce7089f43e019e812b9eee49c99acb5
+  permission_handler_apple: 4ed2196e43d0651e8ff7ca3483a069d469701f2d
+  photo_manager: 1d80ae07a89a67dfbcae95953a1e5a24af7c3e62
+  PINCache: d9a87a0ff397acffe9e2f0db972ac14680441158
+  PINOperation: fb563bcc9c32c26d6c78aaff967d405aa2ee74a7
+  screen_protector: 3d90d44ac886b25335aebd93230b454aef45794a
+  ScreenProtectorKit: 83a6281b02c7a5902ee6eac4f5045f674e902ae4
+  social_sharing_plus: e6024862e5a4be59ef8c97a93558cba1043628bf
+  ua_client_hints: 92fe0d139619b73ec9fcb46cc7e079a26178f586
+  video_thumbnail: b637e0ad5f588ca9945f6e2c927f73a69a661140
+
+PODFILE CHECKSUM: a57f30d18f102dd3ce366b1d62a55ecbef2158e5
+
+COCOAPODS: 1.16.2
