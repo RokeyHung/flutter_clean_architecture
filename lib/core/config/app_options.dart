@@ -1,5 +1,5 @@
 import 'package:flutter_clean_architecture/gen/assets.gen.dart';
-import 'package:flutter_clean_architecture/widgets/atom/app_icon.dart';
+import 'package:flutter_clean_architecture/presentation/widgets/atom/app_icon.dart';
 
 enum AppTab {
   timeline,

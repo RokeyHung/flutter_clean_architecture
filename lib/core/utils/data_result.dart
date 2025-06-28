@@ -1,14 +1,18 @@
-// The code below was inspired by my swift implementation https://gist.github.com/CassiusPacheco/4378d30d69316e4a6ba28a0c3af72628
-// and Avdosev's Dart Either https://github.com/avdosev/either_dart/blob/master/lib/src/either.dart
-
 import 'dart:async';
-
+import 'package:equatable/equatable.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 
-import 'package:equatable/equatable.dart';
+/// Represents a failure due to a violated business rule (e.g. terms not accepted, invalid password match, etc.)
+class ResultFailure implements Exception {
+  final String message;
+  const ResultFailure(this.message);
 
-// General failures
+  @override
+  String toString() => message;
+}
+
+/// Common system-level failure types
 class GenericFailure implements Exception {}
 
 class APIFailure implements Exception {}
@@ -27,67 +31,92 @@ class DuplicatedFailure implements Exception {}
 
 class NotFoundFailure implements Exception {}
 
-/// This abstraction contains either a success data of generic type `S` or a
-/// failure error of type `Failure` as its result.
-///
-/// `data` property must only be retrieved when `DataResult` was constructed by
-/// using `DataResult.success(value)`. It can be validated by calling
-/// `isSuccess` first. Alternatively, `dataOrElse` can be used instead since it
-/// ensures a valid value is returned in case the result is a failure.
-///
-/// `error` must only be retrieved when `DataResult` was constructed by using
-/// `DataResult.failure(error)`. It can be validated by calling `isFailure`
-/// first.
+/// Represents a result that can either be a success or a failure.
+/// Commonly used in UseCases to decouple business rules from infrastructure logic.
 sealed class DataResult<S> extends Equatable {
-  static DataResult<S> failure<S>(Exception failure,
-          [StackTrace? stackTrace]) =>
-      Failure(failure, stackTrace);
-  static DataResult<S> success<S>(S data) => Success(data);
-
   const DataResult._();
 
-  /// Get [error] value, returns null when the value is actually [data]
-  Exception? get error => fold<Exception?>((error) => error, (data) => null);
+  static DataResult<S> success<S>(S data) => Success(data);
 
-  /// Get [data] value, returns null when the value is actually [error]
-  S? get data => fold<S?>((error) => null, (data) => data);
+  static DataResult<S> failure<S>(
+    Exception failure, [
+    StackTrace? stackTrace,
+  ]) =>
+      Failure(failure, stackTrace);
 
-  /// Returns `true` if the object is of the `SuccessResult` type, which means
-  /// `data` will return a valid result.
+  /// Returns the error value if present, otherwise null
+  Exception? get error => fold((e) => e, (_) => null);
+
+  /// Returns the data value if present, otherwise null
+  S? get data => fold((_) => null, (d) => d);
+
+  /// Whether the result represents a success
   bool get isSuccess => this is Success<S>;
 
-  /// Returns `true` if the object is of the `FailureResult` type, which means
-  /// `error` will return a valid result.
+  /// Whether the result represents a failure
   bool get isFailure => this is Failure<S>;
 
-  /// Returns `data` if `isSuccess` returns `true`, otherwise it returns
-  /// `other`.
+  /// Returns `data` if success, otherwise returns `other`
   S dataOrElse(S other) => isSuccess && data != null ? data! : other;
 
-  /// Sugar syntax that calls `dataOrElse` under the hood. Returns left value if
-  /// `isSuccess` returns `true`, otherwise it returns the right value.
+  /// Sugar for `dataOrElse`
   S operator |(S other) => dataOrElse(other);
 
-  /// Transforms values of [error] and [data] in new a `DataResult` type. Only
-  /// the matching function to the object type will be executed. For example,
-  /// for a `SuccessResult` object only the [fnData] function will be executed.
+  /// Transforms either the error or the data into a new result
   DataResult<T> either<T>(
-      Exception Function(Exception error) fnFailure, T Function(S data) fnData);
+    Exception Function(Exception error) fnFailure,
+    T Function(S data) fnData,
+  );
 
-  /// Transforms value of [data] allowing a new `DataResult` to be returned.
-  /// A `SuccessResult` might return a `FailureResult` and vice versa.
-  DataResult<T> then<T>(DataResult<T> Function(S data) fnData);
+  /// If success, transforms the data and returns a new result (which could be success or failure)
+  DataResult<T> then<T>(
+    DataResult<T> Function(S data) fnData,
+  );
 
-  /// Transforms value of [data] always keeping the original identity of the
-  /// `DataResult`, meaning that a `SuccessResult` returns a `SuccessResult` and
-  /// a `FailureResult` always returns a `FailureResult`.
-  DataResult<T> map<T>(T Function(S data) fnData);
+  /// Maps the success data while preserving the original result type
+  DataResult<T> map<T>(
+    T Function(S data) fnData,
+  );
 
-  /// Folds [error] and [data] into the value of one type. Only the matching
-  /// function to the object type will be executed. For example, for a
-  /// `SuccessResult` object only the [fnData] function will be executed.
-  T fold<T>(T Function(Exception error) fnFailure, T Function(S data) fnData);
+  /// Folds the result into a single value
+  T fold<T>(
+    T Function(Exception error) fnFailure,
+    T Function(S data) fnData,
+  );
 
+  /// Returns a new `Success` with new data, or returns self if failure
+  DataResult<S> replaceData(S newData) => isSuccess ? Success(newData) : this;
+
+  /// Handles both branches like `freezed.when`
+  T when<T>({
+    required T Function(S data) success,
+    required T Function(Exception error, StackTrace? stackTrace) failure,
+  }) {
+    if (this is Success<S>) {
+      return success((this as Success<S>).value);
+    } else if (this is Failure<S>) {
+      final fail = this as Failure<S>;
+      return failure(fail.value, fail.stackTrace);
+    }
+    throw UnimplementedError();
+  }
+
+  /// Async version of `when`
+  Future<T> whenAsync<T>({
+    required Future<T> Function(S data) success,
+    required Future<T> Function(Exception error, StackTrace? stackTrace)
+        failure,
+  }) async {
+    if (this is Success<S>) {
+      return success((this as Success<S>).value);
+    } else if (this is Failure<S>) {
+      final fail = this as Failure<S>;
+      return failure(fail.value, fail.stackTrace);
+    }
+    throw UnimplementedError();
+  }
+
+  /// Retries `fn` up to [count] times if it fails, with delay between attempts
   static Future<DataResult<S>> retry<S>(
     FutureOr<DataResult<S>> Function() fn, {
     int count = 3,
@@ -97,9 +126,7 @@ sealed class DataResult<S> extends Equatable {
 
     var result = await fn();
     for (var i = 1; i < count; i++) {
-      if (result.isSuccess) {
-        break;
-      }
+      if (result.isSuccess) break;
       await Future.delayed(interval);
       result = await fn();
     }
@@ -107,52 +134,51 @@ sealed class DataResult<S> extends Equatable {
   }
 
   @override
-  List<Object?> get props => [if (isSuccess) data else error];
+  List<Object?> get props => [isSuccess ? data : error];
 }
 
-/// Success implementation of `DataResult`. It contains `data`. It's abstracted
-/// away by `DataResult`. It shouldn't be used directly in the app.
+/// Holds the success branch of a DataResult
 class Success<S> extends DataResult<S> {
   final S value;
 
   const Success(this.value) : super._();
 
   @override
-  Success<T> either<T>(Exception Function(Exception error) fnFailure,
-      T Function(S data) fnData) {
-    return Success<T>(fnData(value));
-  }
+  Success<T> either<T>(
+    Exception Function(Exception error) fnFailure,
+    T Function(S data) fnData,
+  ) =>
+      Success<T>(fnData(value));
 
   @override
-  DataResult<T> then<T>(DataResult<T> Function(S data) fnData) {
-    return fnData(value);
-  }
+  DataResult<T> then<T>(DataResult<T> Function(S data) fnData) => fnData(value);
 
   @override
-  Success<T> map<T>(T Function(S data) fnData) {
-    return Success<T>(fnData(value));
-  }
+  Success<T> map<T>(T Function(S data) fnData) => Success<T>(fnData(value));
 
   @override
-  T fold<T>(T Function(Exception error) fnFailure, T Function(S data) fnData) {
-    return fnData(value);
-  }
+  T fold<T>(
+    T Function(Exception error) fnFailure,
+    T Function(S data) fnData,
+  ) =>
+      fnData(value);
 }
 
-/// Exception implementation of `DataResult`. It contains `error`.  It's
-/// abstracted away by `DataResult`. It shouldn't be used directly in the app.
+/// Holds the failure branch of a DataResult
 class Failure<S> extends DataResult<S> {
   final Exception value;
+  final StackTrace? stackTrace;
 
-  Failure(this.value, [StackTrace? stackTrace]) : super._() {
+  Failure(this.value, [this.stackTrace]) : super._() {
     if (kDebugMode) {
       debugPrint(
-        '****************************************\n'
-        'DataResult($value) occurred at\n'
-        '${stackTrace ?? StackTrace.current}'
+        '********** DataResult Failure **********\n'
+        'Exception: $value\n'
+        'StackTrace: ${stackTrace ?? StackTrace.current}\n'
         '****************************************',
       );
     }
+
     FirebaseCrashlytics.instance.recordError(
       value,
       stackTrace ?? StackTrace.current,
@@ -160,23 +186,23 @@ class Failure<S> extends DataResult<S> {
   }
 
   @override
-  Failure<T> either<T>(Exception Function(Exception error) fnFailure,
-      T Function(S data) fnData) {
-    return Failure<T>(fnFailure(value));
-  }
+  Failure<T> either<T>(
+    Exception Function(Exception error) fnFailure,
+    T Function(S data) fnData,
+  ) =>
+      Failure<T>(fnFailure(value), stackTrace);
 
   @override
-  Failure<T> map<T>(T Function(S data) fnData) {
-    return Failure<T>(value);
-  }
+  Failure<T> map<T>(T Function(S data) fnData) => Failure<T>(value, stackTrace);
 
   @override
-  Failure<T> then<T>(DataResult<T> Function(S data) fnData) {
-    return Failure<T>(value);
-  }
+  Failure<T> then<T>(DataResult<T> Function(S data) fnData) =>
+      Failure<T>(value, stackTrace);
 
   @override
-  T fold<T>(T Function(Exception error) fnFailure, T Function(S data) fnData) {
-    return fnFailure(value);
-  }
+  T fold<T>(
+    T Function(Exception error) fnFailure,
+    T Function(S data) fnData,
+  ) =>
+      fnFailure(value);
 }
