@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_clean_architecture/framework/navigation/app_route.gr.dart';
+import 'package:flutter_clean_architecture/framework/provider/auth_provider.dart';
 
 class AuthGuard extends AutoRouteGuard {
   AuthGuard({required this.ref});
@@ -11,13 +13,20 @@ class AuthGuard extends AutoRouteGuard {
     NavigationResolver resolver,
     StackRouter router,
   ) {
-    // TODO: Implement authentication logic
-    resolver.next(true);
+    final isAuthenticated = ref.read(isAuthenticatedProvider);
+    
+    if (isAuthenticated) {
+      // User is authenticated, allow navigation
+      resolver.next(true);
+    } else {
+      // User is not authenticated, redirect to login
+      resolver.redirect(const LoginRoute());
+    }
   }
 }
 
-class WelcomeGuard extends AutoRouteGuard {
-  WelcomeGuard({required this.ref});
+class UnauthenticatedGuard extends AutoRouteGuard {
+  UnauthenticatedGuard({required this.ref});
 
   final WidgetRef ref;
 
@@ -26,7 +35,14 @@ class WelcomeGuard extends AutoRouteGuard {
     NavigationResolver resolver,
     StackRouter router,
   ) {
-    // TODO: Implement welcome logic
-    resolver.next();
+    final isAuthenticated = ref.read(isAuthenticatedProvider);
+    
+    if (isAuthenticated) {
+      // User is already authenticated, redirect to home
+      resolver.redirect(const HomeRoute());
+    } else {
+      // User is not authenticated, allow navigation to login/register screens
+      resolver.next();
+    }
   }
 }
