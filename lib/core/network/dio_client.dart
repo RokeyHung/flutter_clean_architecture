@@ -1,15 +1,14 @@
 // CORE - dio_client.dart
 import 'package:dio/dio.dart';
+import '../config/app_config.dart';
 
 class DioClient {
-  static const String _baseUrl = 'https://jsonplaceholder.typicode.com';
-
-  static Dio createDio() {
+  static Dio createDio(AppConfig config) {
     final dio = Dio(
       BaseOptions(
-        baseUrl: _baseUrl,
-        connectTimeout: const Duration(seconds: 10),
-        receiveTimeout: const Duration(seconds: 10),
+        baseUrl: config.apiBaseUrl,
+        connectTimeout: config.connectTimeout,
+        receiveTimeout: config.receiveTimeout,
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -17,14 +16,16 @@ class DioClient {
       ),
     );
 
-    dio.interceptors.addAll([
-      LogInterceptor(
-        requestBody: true,
-        responseBody: true,
-        // ignore: avoid_print
-        logPrint: (obj) => print(obj),
-      ),
-    ]);
+    if (config.enableApiLogging) {
+      dio.interceptors.add(
+        LogInterceptor(
+          requestBody: true,
+          responseBody: true,
+          // ignore: avoid_print
+          logPrint: (obj) => print(obj),
+        ),
+      );
+    }
 
     return dio;
   }

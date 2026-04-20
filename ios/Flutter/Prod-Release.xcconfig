@@ -1,0 +1,4 @@
+#include "Generated.xcconfig"
+
+APP_BUNDLE_ID = com.hhungnm.cleanarch.flutterCleanArchitecture
+APP_DISPLAY_NAME = CleanArch

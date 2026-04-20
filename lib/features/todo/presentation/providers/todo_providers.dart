@@ -1,6 +1,7 @@
 // PRESENTATION - todo_providers.dart
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../../core/config/app_config_provider.dart';
 import '../../../../core/network/dio_client.dart';
 import '../../../../core/providers/core_providers.dart';
 import '../../data/datasources/todo_local_data_source.dart';
@@ -14,7 +15,9 @@ import 'todo_notifier.dart';
 
 // ── Network ───────────────────────────────────────────────────────────────────
 
-final dioProvider = Provider<Dio>((ref) => DioClient.createDio());
+final dioProvider = Provider<Dio>(
+  (ref) => DioClient.createDio(ref.watch(appConfigProvider)),
+);
 
 // ── Data Sources ──────────────────────────────────────────────────────────────
 

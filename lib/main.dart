@@ -1,7 +1,10 @@
-// main.dart
+// main.dart — shared bootstrap, KHÔNG chạy trực tiếp.
+// Dùng: lib/main_dev.dart hoặc lib/main_prod.dart làm entry point.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'core/config/app_config.dart';
+import 'core/config/app_config_provider.dart';
 import 'core/providers/core_providers.dart';
 import 'core/services/app_info_service.dart';
 import 'core/services/firebase_service.dart';
@@ -12,14 +15,15 @@ import 'core/settings/app_settings_notifier.dart';
 import 'core/theme/app_theme_registry.dart';
 import 'core/theme/material_theme_builder.dart';
 
-void main() async {
+/// Entry point dùng chung — được gọi từ main_dev.dart / main_prod.dart.
+Future<void> bootstrap(AppConfig config) async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Parallel init — chạy đồng thời để nhanh hơn
+  // Parallel init
   final results = await Future.wait([
     SharedPreferences.getInstance(),
     AppInfoService.init(),
-    FirebaseService.init(),
+    FirebaseService.init(config),
     MessagingService.init(),
     RemoteConfigService.init(),
     IAPService.init(),
@@ -31,6 +35,7 @@ void main() async {
   runApp(
     ProviderScope(
       overrides: [
+        appConfigProvider.overrideWithValue(config),
         sharedPreferencesProvider.overrideWithValue(sharedPreferences),
         remoteConfigServiceProvider.overrideWithValue(remoteConfig),
       ],
@@ -38,6 +43,8 @@ void main() async {
     ),
   );
 }
+
+// ── App root ──────────────────────────────────────────────────────────────────
 
 class MyApp extends ConsumerStatefulWidget {
   const MyApp({super.key});
@@ -71,6 +78,7 @@ class _MyAppState extends ConsumerState<MyApp> {
   @override
   Widget build(BuildContext context) {
     final router = ref.watch(appRouterProvider);
+    final config = ref.watch(appConfigProvider);
     final settings = ref.watch(appSettingsProvider);
 
     final textTheme = buildTextTheme(
@@ -85,7 +93,7 @@ class _MyAppState extends ConsumerState<MyApp> {
 
     return MaterialApp.router(
       title: 'Flutter Clean Architecture',
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: config.showDebugBanner,
       theme: appTheme.light(),
       darkTheme: appTheme.dark(),
       themeMode: brightness == Brightness.dark

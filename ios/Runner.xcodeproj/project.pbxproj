@@ -150,6 +150,7 @@
 				97C146EB1CF9000F007C117D /* Frameworks */,
 				97C146EC1CF9000F007C117D /* Resources */,
 				9705A1C41CF9048500538489 /* Embed Frameworks */,
+				AA0GSERVICE000000000000001 /* Copy GoogleService-Info.plist */,
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
 			);
 			buildRules = (
@@ -222,6 +223,22 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		AA0GSERVICE000000000000001 /* Copy GoogleService-Info.plist */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy GoogleService-Info.plist";
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Xác định flavor từ tên build configuration\n# Convention: Debug-dev, Release-prod, Profile-dev, ...\nCONFIG=\"${CONFIGURATION}\"\nif [[ \"$CONFIG\" == *\"-dev\"* ]]; then\n  FLAVOR=\"dev\"\nelse\n  FLAVOR=\"prod\"\nfi\n\nSRC=\"${SRCROOT}/config/${FLAVOR}/GoogleService-Info.plist\"\nDST=\"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\"\n\nif [ ! -f \"$SRC\" ]; then\n  echo \"error: GoogleService-Info.plist không tìm thấy tại $SRC\"\n  exit 1\nfi\n\ncp -f \"$SRC\" \"$DST\"\necho \"✅ Copied GoogleService-Info.plist ($FLAVOR) → $DST\"\n";
+		};
 		3B06AD1E1E4923F5004D2608 /* Thin Binary */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
