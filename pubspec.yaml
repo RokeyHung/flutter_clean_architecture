@@ -14,50 +14,60 @@ dependencies:
   flutter_riverpod: ^3.1.0
   riverpod_annotation: ^4.0.0
 
-  # Networking
-  dio: ^5.4.3+1
-
   # Code generation
   freezed_annotation: ^3.1.0
   json_annotation: ^4.9.0
 
+  # Networking
+  dio: ^5.4.3+1
+
   # Functional programming
   fpdart: ^1.1.0
 
-  # Utils
-  uuid: ^4.4.0
+  # Routing
   auto_route: ^11.1.0
-  cupertino_icons: ^1.0.9
-  flutter_secure_storage: ^10.0.0
-  shared_preferences: ^2.5.5
-  package_info_plus: ^9.0.1
-  intl: ^0.20.2
-  flutter_svg: ^2.2.4
-  cached_network_image: ^3.4.1
-  url_launcher: ^6.3.2
-  carousel_slider: ^5.1.2
-  firebase_auth: ^6.4.0
+
+  # Firebase
   firebase_core: ^4.7.0
+  firebase_auth: ^6.4.0
+  firebase_app_check: ^0.4.3
   firebase_crashlytics: ^5.2.0
   firebase_database: ^12.3.0
   firebase_messaging: ^16.2.0
+  firebase_performance: ^0.11.3
   firebase_remote_config: ^6.4.0
   firebase_storage: ^13.3.0
-  firebase_app_check: ^0.4.3
-  firebase_performance: ^0.11.3
-  app_links: ^6.4.1
-  http: ^1.6.0
+
+  # Storage
+  shared_preferences: ^2.5.5
+  flutter_secure_storage: ^10.0.0
+
+  # UI
+  cached_network_image: ^3.4.1
+  carousel_slider: ^5.1.2
   badges: ^3.2.0
   extended_text_field: ^16.0.2
-  image_cropper: ^12.2.1
+  google_fonts: ^8.0.2
+
+  # Media
   image_picker: ^1.2.1
-  share_plus: ^12.0.2
-  version: ^3.0.2
-  app_badge_plus: ^1.2.9
-  ogp_data_extract: ^0.2.2
+  image_cropper: ^12.2.1
+
+  # In-App Purchase
   in_app_purchase: ^3.2.3
   in_app_purchase_android: ^0.4.0+10
   in_app_purchase_storekit: ^0.4.8+1
+
+  # Utils
+  uuid: ^4.4.0
+  intl: ^0.20.2
+  version: ^3.0.2
+  package_info_plus: ^9.0.1
+  app_links: ^6.4.1
+  url_launcher: ^6.3.2
+  share_plus: ^12.0.2
+  app_badge_plus: ^1.2.9
+  ogp_data_extract: ^0.2.2
 
 dev_dependencies:
   flutter_test:

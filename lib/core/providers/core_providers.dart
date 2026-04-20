@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../router/app_router.dart';
 import '../services/auth_service.dart';
 import '../services/messaging_service.dart';
@@ -15,6 +16,14 @@ import '../services/storage_service.dart';
 // ── Router ────────────────────────────────────────────────────────────────────
 
 final appRouterProvider = Provider<AppRouter>((ref) => AppRouter());
+
+// ── SharedPreferences (override in ProviderScope at main) ────────────────────
+
+final sharedPreferencesProvider = Provider<SharedPreferences>(
+  (ref) => throw UnimplementedError(
+    'Override sharedPreferencesProvider in ProviderScope',
+  ),
+);
 
 // ── Secure Storage ────────────────────────────────────────────────────────────
 

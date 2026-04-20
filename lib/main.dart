@@ -5,9 +5,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'core/providers/core_providers.dart';
 import 'core/services/app_info_service.dart';
 import 'core/services/firebase_service.dart';
+import 'core/services/iap_service.dart';
 import 'core/services/messaging_service.dart';
 import 'core/services/remote_config_service.dart';
-import 'features/todo/presentation/providers/todo_providers.dart';
+import 'core/settings/app_settings_notifier.dart';
+import 'core/theme/app_theme_registry.dart';
+import 'core/theme/material_theme_builder.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,6 +22,7 @@ void main() async {
     FirebaseService.init(),
     MessagingService.init(),
     RemoteConfigService.init(),
+    IAPService.init(),
   ]);
 
   final sharedPreferences = results[0] as SharedPreferences;
@@ -51,7 +55,6 @@ class _MyAppState extends ConsumerState<MyApp> {
   }
 
   void _initDeepLinks() {
-    // Log navigation history — urlState không có .stream, dùng router.current
     WidgetsBinding.instance.addPostFrameCallback((_) {
       debugPrint('Router ready: ${ref.read(appRouterProvider).currentPath}');
     });
@@ -68,14 +71,26 @@ class _MyAppState extends ConsumerState<MyApp> {
   @override
   Widget build(BuildContext context) {
     final router = ref.watch(appRouterProvider);
+    final settings = ref.watch(appSettingsProvider);
+
+    final textTheme = buildTextTheme(
+      context,
+      settings.fontBody,
+      settings.fontDisplay,
+    );
+    final registry = buildThemeRegistry(textTheme);
+    final appTheme = registry[settings.themeId] ?? registry[defaultThemeId]!;
+
+    final brightness = View.of(context).platformDispatcher.platformBrightness;
 
     return MaterialApp.router(
       title: 'Flutter Clean Architecture',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: appTheme.light(),
+      darkTheme: appTheme.dark(),
+      themeMode: brightness == Brightness.dark
+          ? ThemeMode.dark
+          : ThemeMode.light,
       routerConfig: router.config(),
     );
   }

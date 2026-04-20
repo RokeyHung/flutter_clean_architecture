@@ -1,8 +1,8 @@
 // PRESENTATION - todo_providers.dart
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/network/dio_client.dart';
+import '../../../../core/providers/core_providers.dart';
 import '../../data/datasources/todo_local_data_source.dart';
 import '../../data/datasources/todo_remote_data_source.dart';
 import '../../data/repositories/todo_repository_impl.dart';
@@ -15,14 +15,6 @@ import 'todo_notifier.dart';
 // ── Network ───────────────────────────────────────────────────────────────────
 
 final dioProvider = Provider<Dio>((ref) => DioClient.createDio());
-
-// ── SharedPreferences (override in ProviderScope at main) ────────────────────
-
-final sharedPreferencesProvider = Provider<SharedPreferences>(
-  (ref) => throw UnimplementedError(
-    'Override sharedPreferencesProvider in ProviderScope',
-  ),
-);
 
 // ── Data Sources ──────────────────────────────────────────────────────────────
 
