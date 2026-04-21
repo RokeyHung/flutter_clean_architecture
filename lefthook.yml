@@ -1,0 +1,32 @@
+# lefthook.yml — Git hooks cho Flutter Clean Architecture
+# Cài đặt: make lefthook-install
+# Docs: https://github.com/evilmartians/lefthook
+
+pre-commit:
+  parallel: false
+  commands:
+    format-check:
+      glob: "lib/**/*.dart"
+      run: dart format --set-exit-if-changed lib
+      fail_text: |
+        ❌ Có file chưa format. Chạy `make format` rồi commit lại.
+
+    analyze:
+      glob: "lib/**/*.dart"
+      run: flutter analyze lib
+      fail_text: |
+        ❌ flutter analyze thất bại. Fix lỗi trước khi commit.
+
+    custom-lint:
+      glob: "lib/**/*.dart"
+      run: dart run custom_lint
+      fail_text: |
+        ❌ riverpod_lint thất bại. Fix lỗi trước khi commit.
+
+pre-push:
+  parallel: false
+  commands:
+    test:
+      run: flutter test --test-randomize-ordering-seed random
+      fail_text: |
+        ❌ Tests thất bại. Fix trước khi push.

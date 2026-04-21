@@ -12,7 +12,8 @@
         build-ios build-ios-prod \
         firebase-deploy-dev firebase-deploy-staging \
         splash icons \
-        doctor outdated upgrade git-log
+        doctor outdated upgrade git-log \
+        lefthook-install
 
 APP_NAME   := flutter_clean_architecture
 FLUTTER    := flutter
@@ -26,6 +27,9 @@ help: ## Show this help
 # ── Setup ─────────────────────────────────────────────────────────────────────
 get: ## flutter pub get
 	$(FLUTTER) pub get
+
+lefthook-install: ## Cài git hooks qua lefthook (chạy một lần sau khi clone)
+	lefthook install
 
 upgrade: ## flutter pub upgrade
 	$(FLUTTER) pub upgrade
@@ -74,10 +78,10 @@ ci: format-check lint test ## Full CI check: format-check + lint + test
 
 # ── Test ──────────────────────────────────────────────────────────────────────
 test: ## Run all unit tests
-	$(FLUTTER) test
+	$(FLUTTER) test --test-randomize-ordering-seed random
 
 test-verbose: ## Run tests with verbose output
-	$(FLUTTER) test --reporter expanded
+	$(FLUTTER) test --reporter expanded --test-randomize-ordering-seed random
 
 test-coverage: ## Run tests + generate coverage (requires lcov)
 	$(FLUTTER) test --coverage

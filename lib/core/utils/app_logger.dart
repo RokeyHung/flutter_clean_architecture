@@ -24,7 +24,11 @@ class AppLogger {
   /// Gọi một lần trong `main()` sau khi FirebaseService.init() xong.
   ///
   /// [enableCrashlytics] nên = `config.enableCrashlytics`.
-  static void init({bool enableCrashlytics = false}) {
+  /// [logLevel] nên = `config.logLevel`.
+  static void init({
+    bool enableCrashlytics = false,
+    Level logLevel = Level.debug,
+  }) {
     _crashlyticsEnabled = enableCrashlytics;
     _logger = Logger(
       printer: kDebugMode
@@ -39,7 +43,7 @@ class AppLogger {
           : SimplePrinter(colors: false, printTime: true),
       filter: kDebugMode ? DevelopmentFilter() : ProductionFilter(),
       output: kDebugMode ? ConsoleOutput() : _CrashlyticsOutput(),
-      level: kDebugMode ? Level.debug : Level.warning,
+      level: logLevel,
     );
   }
 

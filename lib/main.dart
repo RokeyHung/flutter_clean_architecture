@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'core/config/app_config.dart';
 import 'core/config/app_config_provider.dart';
+import 'core/providers/app_provider_observer.dart';
 import 'core/providers/core_providers.dart';
 import 'core/services/app_info_service.dart';
 import 'core/services/firebase_service.dart';
@@ -31,7 +32,10 @@ Future<void> bootstrap(AppConfig config) async {
   ]);
 
   // Logger phải init sau FirebaseService (cần Crashlytics sẵn sàng)
-  AppLogger.init(enableCrashlytics: config.enableCrashlytics);
+  AppLogger.init(
+    enableCrashlytics: config.enableCrashlytics,
+    logLevel: config.logLevel,
+  );
   AppLogger.i('App bootstrapped [${config.name}]', tag: 'Bootstrap');
 
   final sharedPreferences = results[0] as SharedPreferences;
@@ -39,6 +43,7 @@ Future<void> bootstrap(AppConfig config) async {
 
   runApp(
     ProviderScope(
+      observers: [AppProviderObserver()],
       overrides: [
         appConfigProvider.overrideWithValue(config),
         sharedPreferencesProvider.overrideWithValue(sharedPreferences),

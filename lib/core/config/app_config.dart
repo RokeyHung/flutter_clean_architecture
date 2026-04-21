@@ -9,6 +9,7 @@
 //   4. Thêm flavor vào build.gradle.kts + Makefile
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
+import 'package:logger/logger.dart';
 import 'firebase_options_dev.dart';
 import 'firebase_options_prod.dart';
 
@@ -45,6 +46,10 @@ abstract class AppConfig {
 
   /// Receive timeout của Dio.
   Duration get receiveTimeout;
+
+  /// Log level cho AppLogger.
+  /// Dev: Level.debug, Prod: Level.warning
+  Level get logLevel;
 
   // Tiện ích kiểm tra nhanh
   bool get isDev => name == 'dev';
@@ -83,6 +88,9 @@ class DevConfig extends AppConfig {
 
   @override
   Duration get receiveTimeout => const Duration(seconds: 30);
+
+  @override
+  Level get logLevel => Level.debug;
 }
 
 // ── Prod ──────────────────────────────────────────────────────────────────────
@@ -117,4 +125,7 @@ class ProdConfig extends AppConfig {
 
   @override
   Duration get receiveTimeout => const Duration(seconds: 15);
+
+  @override
+  Level get logLevel => Level.warning;
 }
