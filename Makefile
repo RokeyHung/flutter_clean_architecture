@@ -3,13 +3,16 @@
 # Usage: make <target>
 # ──────────────────────────────────────────────────────────────────────────────
 
-.PHONY: help get clean build-runner watch lint format test test-coverage \
+.PHONY: help get clean clean-build build-runner watch \
+        format format-check lint fix check ci \
+        test test-verbose test-coverage test-watch \
         run run-dev run-staging run-prod \
         build-apk build-apk-dev build-apk-staging build-apk-prod \
         build-aab build-aab-prod \
         build-ios build-ios-prod \
-        firebase-deploy splash icons \
-        doctor outdated upgrade
+        firebase-deploy-dev firebase-deploy-staging \
+        splash icons \
+        doctor outdated upgrade git-log
 
 APP_NAME   := flutter_clean_architecture
 FLUTTER    := flutter
@@ -52,16 +55,22 @@ clean: ## flutter clean + remove generated files
 clean-build: clean get build-runner ## Full clean → pub get → build_runner
 
 # ── Format & Lint ─────────────────────────────────────────────────────────────
-format: ## dart format all files
+format: ## dart format all files (auto-fix)
 	$(DART) format lib test
 
-lint: ## flutter analyze
+format-check: ## Check format without modifying files (dùng trong CI)
+	$(DART) format --set-exit-if-changed lib test
+
+lint: ## flutter analyze + custom_lint (riverpod_lint)
 	$(FLUTTER) analyze lib
+	$(DART) run custom_lint
 
 fix: ## dart fix --apply
 	$(DART) fix --apply lib
 
-check: format lint ## format + lint
+check: format lint ## format + lint (flutter analyze + custom_lint)
+
+ci: format-check lint test ## Full CI check: format-check + lint + test
 
 # ── Test ──────────────────────────────────────────────────────────────────────
 test: ## Run all unit tests

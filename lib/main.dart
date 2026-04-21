@@ -14,6 +14,7 @@ import 'core/services/remote_config_service.dart';
 import 'core/settings/app_settings_notifier.dart';
 import 'core/theme/app_theme_registry.dart';
 import 'core/theme/material_theme_builder.dart';
+import 'core/utils/app_logger.dart';
 
 /// Entry point dùng chung — được gọi từ main_dev.dart / main_prod.dart.
 Future<void> bootstrap(AppConfig config) async {
@@ -28,6 +29,10 @@ Future<void> bootstrap(AppConfig config) async {
     RemoteConfigService.init(),
     IAPService.init(),
   ]);
+
+  // Logger phải init sau FirebaseService (cần Crashlytics sẵn sàng)
+  AppLogger.init(enableCrashlytics: config.enableCrashlytics);
+  AppLogger.i('App bootstrapped [${config.name}]', tag: 'Bootstrap');
 
   final sharedPreferences = results[0] as SharedPreferences;
   final remoteConfig = results[4] as RemoteConfigService;
@@ -63,7 +68,10 @@ class _MyAppState extends ConsumerState<MyApp> {
 
   void _initDeepLinks() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      debugPrint('Router ready: ${ref.read(appRouterProvider).currentPath}');
+      AppLogger.d(
+        'Router ready: ${ref.read(appRouterProvider).currentPath}',
+        tag: 'App',
+      );
     });
   }
 
@@ -71,7 +79,7 @@ class _MyAppState extends ConsumerState<MyApp> {
     final messaging = ref.read(messagingServiceProvider);
     messaging.requestPermission();
     messaging.onMessage.listen((msg) {
-      debugPrint('FCM foreground: ${msg.notification?.title}');
+      AppLogger.i('Foreground message: ${msg.notification?.title}', tag: 'FCM');
     });
   }
 

@@ -1,11 +1,13 @@
 // CORE - iap_service.dart
 import 'dart:async';
-import 'package:flutter/foundation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import '../utils/app_logger.dart';
 
 /// Khởi tạo và quản lý In-App Purchase.
 /// Hiện tại chỉ init listener để sẵn sàng cho việc implement sau.
 class IAPService {
+  static const _tag = 'IAP';
+
   IAPService._();
 
   static final IAPService _instance = IAPService._();
@@ -18,19 +20,23 @@ class IAPService {
   static Future<void> init() async {
     final available = await InAppPurchase.instance.isAvailable();
     if (!available) {
-      debugPrint('[IAP] Store not available on this device');
+      AppLogger.w('Store not available on this device', tag: _tag);
       return;
     }
     _instance._listenToPurchaseUpdates();
-    debugPrint('[IAP] In-App Purchase initialized');
+    AppLogger.i('In-App Purchase initialized', tag: _tag);
   }
 
   void _listenToPurchaseUpdates() {
     _subscription = _iap.purchaseStream.listen(
       _onPurchaseUpdated,
       onDone: _subscription?.cancel,
-      onError: (Object error) =>
-          debugPrint('[IAP] Purchase stream error: $error'),
+      onError: (Object error, StackTrace st) => AppLogger.e(
+        'Purchase stream error',
+        tag: _tag,
+        error: error,
+        stackTrace: st,
+      ),
     );
   }
 
@@ -38,17 +44,21 @@ class IAPService {
     for (final purchase in purchaseDetailsList) {
       switch (purchase.status) {
         case PurchaseStatus.pending:
-          debugPrint('[IAP] Purchase pending: ${purchase.productID}');
+          AppLogger.d('Purchase pending: ${purchase.productID}', tag: _tag);
         case PurchaseStatus.purchased:
         case PurchaseStatus.restored:
           // TODO: verify & deliver product
-          debugPrint('[IAP] Purchase complete: ${purchase.productID}');
+          AppLogger.i('Purchase complete: ${purchase.productID}', tag: _tag);
           _iap.completePurchase(purchase);
         case PurchaseStatus.error:
-          debugPrint('[IAP] Purchase error: ${purchase.error}');
+          AppLogger.e(
+            'Purchase error: ${purchase.productID}',
+            tag: _tag,
+            error: purchase.error,
+          );
           _iap.completePurchase(purchase);
         case PurchaseStatus.canceled:
-          debugPrint('[IAP] Purchase canceled: ${purchase.productID}');
+          AppLogger.d('Purchase canceled: ${purchase.productID}', tag: _tag);
       }
     }
   }
