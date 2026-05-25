@@ -4,8 +4,8 @@ import 'package:fpdart/fpdart.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:flutter_clean_architecture/core/error/failures.dart';
 import 'package:flutter_clean_architecture/core/usecase/usecase.dart';
-import 'package:flutter_clean_architecture/features/todo/domain/usecases/get_todos_usecase.dart';
-import '../helpers/mock_todo_repository.dart';
+import 'package:flutter_clean_architecture/domain/usecases/get_todos_usecase.dart';
+import '../../helpers/mock_todo_repository.dart';
 
 void main() {
   late GetTodosUseCase useCase;

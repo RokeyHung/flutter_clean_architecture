@@ -1,8 +1,8 @@
 // DATA - todo_repository_impl.dart
 import 'package:fpdart/fpdart.dart';
 import 'package:uuid/uuid.dart';
-import '../../../../core/error/exceptions.dart';
-import '../../../../core/error/failures.dart';
+import '../../core/error/exceptions.dart';
+import '../../core/error/failures.dart';
 import '../../domain/entities/todo_entity.dart';
 import '../../domain/repositories/todo_repository.dart';
 import '../datasources/todo_local_data_source.dart';

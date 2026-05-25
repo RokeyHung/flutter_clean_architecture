@@ -3,7 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_clean_architecture/features/todo/domain/entities/todo_entity.dart';
+import '../../../../domain/entities/todo_entity.dart';
 
 class TodoItemWidget extends StatelessWidget {
   final TodoEntity todo;

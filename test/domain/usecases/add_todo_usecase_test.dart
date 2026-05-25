@@ -3,9 +3,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:flutter_clean_architecture/core/error/failures.dart';
-import 'package:flutter_clean_architecture/features/todo/domain/entities/todo_entity.dart';
-import 'package:flutter_clean_architecture/features/todo/domain/usecases/add_todo_usecase.dart';
-import '../helpers/mock_todo_repository.dart';
+import 'package:flutter_clean_architecture/domain/entities/todo_entity.dart';
+import 'package:flutter_clean_architecture/domain/usecases/add_todo_usecase.dart';
+import '../../helpers/mock_todo_repository.dart';
 
 void main() {
   late AddTodoUseCase useCase;

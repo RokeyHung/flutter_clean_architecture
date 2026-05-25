@@ -4,12 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/config/app_config_provider.dart';
 import '../../../../core/network/dio_client.dart';
 import '../../../../core/providers/core_providers.dart';
-import '../../data/datasources/todo_local_data_source.dart';
-import '../../data/datasources/todo_remote_data_source.dart';
-import '../../data/repositories/todo_repository_impl.dart';
-import '../../domain/repositories/todo_repository.dart';
-import '../../domain/usecases/add_todo_usecase.dart';
-import '../../domain/usecases/get_todos_usecase.dart';
+import '../../../../data/datasources/todo_local_data_source.dart';
+import '../../../../data/datasources/todo_remote_data_source.dart';
+import '../../../../data/repositories/todo_repository_impl.dart';
+import '../../../../domain/repositories/todo_repository.dart';
+import '../../../../domain/usecases/add_todo_usecase.dart';
+import '../../../../domain/usecases/get_todos_usecase.dart';
 import '../state/todo_state.dart';
 import 'todo_notifier.dart';
 

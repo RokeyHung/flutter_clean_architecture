@@ -1,6 +1,6 @@
 // DOMAIN - todo_repository.dart (interface)
 import 'package:fpdart/fpdart.dart';
-import '../../../../core/error/failures.dart';
+import '../../core/error/failures.dart';
 import '../entities/todo_entity.dart';
 
 abstract interface class TodoRepository {

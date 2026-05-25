@@ -1,6 +1,6 @@
 // PRESENTATION - todo_state.dart
 import 'package:freezed_annotation/freezed_annotation.dart';
-import '../../domain/entities/todo_entity.dart';
+import '../../../../domain/entities/todo_entity.dart';
 
 part 'todo_state.freezed.dart';
 

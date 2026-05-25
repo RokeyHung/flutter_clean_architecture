@@ -1,7 +1,7 @@
 // PRESENTATION - todo_notifier.dart
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../domain/entities/todo_entity.dart';
-import '../../domain/usecases/add_todo_usecase.dart';
+import '../../../../domain/entities/todo_entity.dart';
+import '../../../../domain/usecases/add_todo_usecase.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/usecase/usecase.dart';
 import '../state/todo_state.dart';

@@ -1,7 +1,7 @@
 // DATA SOURCE - todo_local_data_source.dart (SharedPreferences)
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../../core/error/exceptions.dart';
+import '../../core/error/exceptions.dart';
 import '../models/todo_model.dart';
 
 abstract interface class TodoLocalDataSource {

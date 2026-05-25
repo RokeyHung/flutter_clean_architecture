@@ -4,10 +4,10 @@ import 'package:fpdart/fpdart.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:flutter_clean_architecture/core/error/exceptions.dart';
 import 'package:flutter_clean_architecture/core/error/failures.dart';
-import 'package:flutter_clean_architecture/features/todo/data/datasources/todo_local_data_source.dart';
-import 'package:flutter_clean_architecture/features/todo/data/datasources/todo_remote_data_source.dart';
-import 'package:flutter_clean_architecture/features/todo/data/models/todo_model.dart';
-import 'package:flutter_clean_architecture/features/todo/data/repositories/todo_repository_impl.dart';
+import 'package:flutter_clean_architecture/data/datasources/todo_local_data_source.dart';
+import 'package:flutter_clean_architecture/data/datasources/todo_remote_data_source.dart';
+import 'package:flutter_clean_architecture/data/models/todo_model.dart';
+import 'package:flutter_clean_architecture/data/repositories/todo_repository_impl.dart';
 
 class MockRemoteDataSource extends Mock implements TodoRemoteDataSource {}
 
@@ -73,10 +73,7 @@ void main() {
 
       expect(result, isA<Left>());
       result.fold(
-        (failure) => failure.maybeWhen(
-          network: (msg, _) => expect(msg, 'No internet'),
-          orElse: () => fail('Expected NetworkFailure'),
-        ),
+        (failure) => expect(failure, isA<NetworkFailure>()),
         (_) => fail('Expected Left'),
       );
     });

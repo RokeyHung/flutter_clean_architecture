@@ -10,5 +10,5 @@ sealed class TodoEntity with _$TodoEntity {
     required String title,
     required bool completed,
     String? description,
-  }) = _TodoEntity;
+  }) = TodoEntityData;
 }

@@ -1,6 +1,6 @@
 // DATA SOURCE - todo_remote_data_source.dart
 import 'package:dio/dio.dart';
-import '../../../../core/error/exceptions.dart';
+import '../../core/error/exceptions.dart';
 import '../models/todo_model.dart';
 
 abstract interface class TodoRemoteDataSource {
